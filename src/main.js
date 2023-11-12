@@ -1,5 +1,4 @@
 var channelID = ''; // channel ID for building the player and chat
-let volume = 0.5; // can be "0.1" to "1" for the twitch player
 let quality = "720p60";
 let live = false; // true if live on Kick.com
 let alreadySwitched = false; // false if on twitch player true if on Kick.com player
@@ -14,8 +13,8 @@ document.body.onload = nullCheck;
 
 
 // Parent url needed for the twitch player embed
-let parentURL = "kick-twitch-viewer.netlify.app"; // for the demo page
-// let parentURL = "127.0.0.1"; // for local developement
+let parentURL = "yungsamd17.github.io"; // for the demo page
+// let parentURL = "localhost"; // for local developement
 
 // fuction to check if the channel is live on Kick.com through the API every 10s
 async function checkStream(channel) {
@@ -49,7 +48,7 @@ function switchPlatform() {
     if(platformSwitchBtn.getAttribute('current') === 'twitch') { // if on Twitch switch to Kick
         buildKick(channelID);
     } else if(platformSwitchBtn.getAttribute('current') === 'kick') { // if on Kick switch to Twitch
-        buildTwitch(channelID, quality, volume)
+        buildTwitch(channelID, quality)
     }
 }
 
@@ -134,8 +133,8 @@ function channelSelector() {
     checkCookie();
 }
 
-function buildTwitch(channel, quality, volume) {
-    document.getElementById('twitch-player').src = `https://player.twitch.tv/?channel=${channel}&enableExtensions=false&parent=${parentURL}&player=popout&quality=${quality}&volume=${volume}&muted=false`;
+function buildTwitch(channel, quality) {
+    document.getElementById('twitch-player').src = `https://player.twitch.tv/?channel=${channel}&parent=${parentURL}&player=popout&quality=${quality}`;
     document.getElementById('twitch-chat').src = `https://www.giambaj.it/twitch/jchat/v2/?channel=${channel}&bots=true&hide_commands=true&size=1&font=2`;
     platformSwitchBtn.setAttribute("current", "twitch");
     alreadySwitched = false;
@@ -155,7 +154,6 @@ function buildKick(channel) {
 
 function checkQuery() {
     let channelQuery = urlParams.get("channel");
-    let volume = urlParams.get("volume");
     let quality = urlParams.get("quality");
     channelID = channelQuery;
     if(channelQuery == "" || channelQuery == null){
@@ -163,16 +161,13 @@ function checkQuery() {
         channelQuery = c;
         channelID = c;
     }
-    if(volume == "" || volume == null || volume == "null") {
-        volume = 1;
-    };
-    if(quality == "" || quality == null || volume == "null") {
+    if(quality == "" || quality == "null") {
         quality = "720p60";
     } else if(quality == "best") {
         quality = "chunked";
     }
 
-    buildTwitch(channelID, quality, volume);
+    buildTwitch(channelID, quality);
 }
 
 if( queryString == "" || queryString == null || queryString == "null") {
@@ -184,6 +179,6 @@ if( queryString == "" || queryString == null || queryString == "null") {
 
 async function nullCheck(){
     if(channelID == null || channelID == "null" || channelID == ""){
-    buildTwitch("monstercat", "360p30", "0.5")
+    buildTwitch("xqc", "1080p60", "0.5")
     }
 }

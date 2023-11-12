@@ -22,18 +22,20 @@ html, body{
 }
 
 #channelSelector {
-    animation: fadeOut 0.2s forwards;
-    animation-delay: 5s;
+    animation: fadeOut 0.4s forwards;
+    animation-delay: 2s;
     position: absolute;
+    right: 0;
     display: inline-block;
-    left: 0%;
     border: none;
+    border-radius: 10px;
     color: white;
-    padding: 20px 105px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    background-color: #4CAF50;
+    padding: 20px 90px;
+    margin: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #1a73e8;
+    cursor: pointer;
 }
 
 #channelSelector:hover {
