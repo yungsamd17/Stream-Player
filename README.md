@@ -1,7 +1,7 @@
-# Kick and Twitch viewer
+# Stream Player
 Webpage with embedded Twitch & Kick player and chat
 
-[DEMO](https://kick-twitch-viewer.netlify.app)
+[yungsamd17.github.io/Stream-Player](https://yungsamd17.github.io/Stream-Player/)
 
 ## Features
 
@@ -9,9 +9,9 @@ Webpage with embedded Twitch & Kick player and chat
 - Automatically switch stream if Kick stream either goes live or offline. (checks the same username that is entered in the prompt.)
 - 3rd party chat supports 7TV,BTTV,FFZ emotes.
 - Remember selected channel on page load.
-- Enter /?channel={channel}&quality={720p60}&volume={0.5} to change channel, quality, volume on page load. Not all 3 prompt is required. Quality change only works with the Twitch player Kick didn't implement this feature yet in their player.
+- Enter /?channel={channel}&quality={720p60} to change channel and quality. Not both of the prompts are required. Quality change only works with the Twitch player Kick didn't implement this feature yet in their player.
 - Early Portrait mode for mobile devices (CSS help welcome). 
-- Load [Monstercat](https://twitch.tv/monstercat) stream if no stream is selected.
+- Load [xQc](https://twitch.tv/xqc) stream if no stream is selected.
 
 
 ## Why
