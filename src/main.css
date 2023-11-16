@@ -11,16 +11,6 @@ html, body{
     height: 100%;
 }
 
-#kick-icon{
-    position: absolute;
-    height: 10%;
-    opacity: 0;
-}
-
-#platformSwitch{
-    display: none;
-}
-
 #channelSelector {
     animation: fadeOut 0.4s forwards;
     animation-delay: 2s;
@@ -42,8 +32,6 @@ html, body{
     animation: fadeIn 0.2s forwards;
 }
 
-#alertBox {
-    display: none;
 }
 
 @keyframes fadeIn {
