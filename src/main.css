@@ -12,38 +12,27 @@ html, body{
 }
 
 #channelSelector {
-    animation: fadeOut 0.4s forwards;
-    animation-delay: 2s;
     position: absolute;
     right: 0;
     display: inline-block;
     border: none;
-    border-radius: 10px;
     color: white;
-    padding: 20px 90px;
-    margin: 10px;
+    padding: 19px 100px;
     font-size: 1rem;
     font-weight: bold;
-    background-color: #1a73e8;
+    background-color: #0e0e10;
+    border-bottom: 1px solid #18181b;
     cursor: pointer;
 }
 
 #channelSelector:hover {
-    animation: fadeIn 0.2s forwards;
+    background-color: #18181b;
 }
 
+#channelSelector:active {
+    background-color: #242429;
+    border-bottom: 1px solid #242429;
 }
-
-@keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
-
-@keyframes fadeOut {
-    from {opacity: 1;}
-    to {opacity: 0;}
-}
-
 
 @media only screen and (max-aspect-ratio: 1/1){
     .player{
