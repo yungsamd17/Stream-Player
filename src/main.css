@@ -34,6 +34,11 @@ html, body{
     border-bottom: 1px solid #242429;
 }
 
+.chat {
+    border-left: 1px solid #18181b;
+}
+
+
 @media only screen and (max-aspect-ratio: 1/1){
     .player{
         flex: 1 1 auto;
