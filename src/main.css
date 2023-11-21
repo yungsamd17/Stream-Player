@@ -38,6 +38,18 @@ html, body{
     border-left: 1px solid #18181b;
 }
 
+#kick-icon{
+    position: absolute;
+    height: 10%;
+    opacity: 0;
+}
+#platformSwitch{
+    display: none;
+}
+
+#alertBox {
+    display: none;
+}
 
 @media only screen and (max-aspect-ratio: 1/1){
     .player{
