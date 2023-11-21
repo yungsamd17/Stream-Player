@@ -5,6 +5,7 @@ let alreadySwitched = false; // false if on twitch player true if on Kick.com pl
 let kickCheck = 1000; // how often the live check updates for Kick.com (ms)
 var kickCount = 10;
 var interval;
+let platformSwitchBtn = document.getElementById('platformSwitch'); // was a button to change to Kick, now used for determining if player is Twitch or Kick (this is a bad implementation)
 let channelBtn = document.getElementById('channelSelector'); 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -40,6 +41,16 @@ function setOffline() {
     live = false;
     // console.log("[INFO] Not Live on KICK")
 };
+
+
+// current ui builder solution
+function switchPlatform() {
+    if(platformSwitchBtn.getAttribute('current') === 'twitch') { // if on Twitch switch to Kick
+        buildKick(channelID);
+    } else if(platformSwitchBtn.getAttribute('current') === 'kick') { // if on Kick switch to Twitch
+        buildTwitch(channelID, quality)
+    }
+}
 
 
 function platformCheck() {
@@ -125,6 +136,7 @@ function channelSelector() {
 function buildTwitch(channel, quality) {
     document.getElementById('twitch-player').src = `https://player.twitch.tv/?channel=${channel}&parent=${parentURL}&player=popout&quality=${quality}`;
     document.getElementById('twitch-chat').src = `https://www.giambaj.it/twitch/jchat/v2/?channel=${channel}&bots=true&hide_commands=true&size=1&font=2`;
+    platformSwitchBtn.setAttribute("current", "twitch");
     alreadySwitched = false;
     channelID = channel;
     
@@ -133,7 +145,8 @@ function buildTwitch(channel, quality) {
 function buildKick(channel) {
     document.getElementById('twitch-player').src = `https://player.kick.com/${channel}?muted=false&autoplay=true&allowfullscreen=true`;
     // document.getElementById('twitch-chat').src = `https://kick-chat.corard.tv/v1/chat?user=${channel}&font-size=Small&stroke=Off&animate=false&badges=true&commands=false&bots=false`;
-    document.getElementById('twitch-chat').src = `https://chat-overlay.matinaniss.com/?channel=${channel}&sevenTVCosmeticsEnabled=true&sevenTVEmotesEnabled=true&theme=dark&textShadow=small&textSize=medium&animation=none&showPinEnabled=false&textBackgroundEnabled=true`;
+    document.getElementById('twitch-chat').src = `https://chat-overlay.matinaniss.com/?channel=${channel}&sevenTVCosmeticsEnabled=true&sevenTVEmotesEnabled=true&theme=dark&textShadow=small&textSize=medium&animation=none&showPinEnabled=false&textBackgroundEnabled=true`
+    platformSwitchBtn.setAttribute("current", "kick");
     alreadySwitched = true;
     channelID = channel;
 }
