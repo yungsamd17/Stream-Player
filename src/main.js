@@ -3,6 +3,7 @@ const chat = document.getElementById('twitch-chat');
 const channelInput = document.getElementById('channel-input');
 const currentPlatform = document.getElementById('current-platform');
 const status = document.getElementById('status');
+const autoStatus = document.getElementById('auto-status');
 const platformMode = document.getElementById('platform-mode');
 const qualitySelect = document.getElementById('quality');
 const chatToggle = document.getElementById('chat-toggle');
@@ -23,14 +24,21 @@ qualitySelect.value = quality;
 platformMode.value = ['auto', 'twitch', 'kick'].includes(readSetting('stream-platform')) ? readSetting('stream-platform') : 'auto';
 let platform = platformMode.value === 'kick' ? 'kick' : 'twitch';
 let generation = 0;
+let requestId = 0;
+
+function renderPlayer() {
+    const name = encodeURIComponent(channel);
+    player.src = platform === 'kick'
+        ? `https://player.kick.com/${name}?muted=true&autoplay=true&allowfullscreen=true`
+        : `https://player.twitch.tv/?channel=${name}&parent=${encodeURIComponent(location.hostname)}&player=popout&autoplay=true&muted=true&quality=${encodeURIComponent(quality)}`;
+}
 
 function render() {
     const name = encodeURIComponent(channel);
+    renderPlayer();
     if (platform === 'kick') {
-        player.src = `https://player.kick.com/${name}?muted=false&autoplay=true&allowfullscreen=true`;
         chat.src = `https://chat-overlay.matinaniss.com/?channel=${name}&sevenTVCosmeticsEnabled=true&sevenTVEmotesEnabled=true&theme=dark&textShadow=small&textSize=medium&animation=none&showPinEnabled=false&textBackgroundEnabled=true`;
     } else {
-        player.src = `https://player.twitch.tv/?channel=${name}&parent=${encodeURIComponent(location.hostname)}&player=popout&quality=${encodeURIComponent(quality)}`;
         chat.src = `https://www.giambaj.it/twitch/jchat/v2/?channel=${name}&bots=true&hide_commands=true&size=1&font=2`;
     }
     currentPlatform.textContent = platform === 'kick' ? 'Kick' : 'Twitch';
@@ -42,15 +50,19 @@ function render() {
 async function checkStream() {
     if (platformMode.value !== 'auto') return;
     const checkedGeneration = generation;
+    const checkedRequest = ++requestId;
     try {
         const response = await fetch(`https://kick.com/api/v2/channels/${encodeURIComponent(channel)}`);
-        if (!response.ok) return;
+        if (!response.ok) throw new Error("Live check failed");
         const data = await response.json();
-        if (checkedGeneration !== generation || platformMode.value !== 'auto') return;
+        if (checkedGeneration !== generation || checkedRequest !== requestId || platformMode.value !== 'auto') return;
+        autoStatus.hidden = true;
         const nextPlatform = data.livestream?.is_live ? 'kick' : 'twitch';
         if (nextPlatform !== platform) { platform = nextPlatform; render(); }
     } catch (_) {
-        // Keep the current stream when the live check is unavailable.
+        if (checkedGeneration !== generation || checkedRequest !== requestId || platformMode.value !== 'auto') return;
+        autoStatus.textContent = 'Auto switching is unavailable. Choose a platform in Settings.';
+        autoStatus.hidden = false;
     }
 }
 
@@ -85,13 +97,19 @@ for (const input of [channelInput, welcomeChannel]) input.addEventListener('inpu
 platformMode.addEventListener('change', () => {
     generation++;
     saveSetting('stream-platform', platformMode.value);
+    autoStatus.hidden = true;
     if (platformMode.value !== 'auto' && platform !== platformMode.value) { platform = platformMode.value; render(); }
     if (platformMode.value === 'auto') checkStream();
 });
 qualitySelect.addEventListener('change', () => {
     quality = qualitySelect.value;
     saveSetting('stream-quality', quality);
-    if (platform === 'twitch') render();
+    const url = new URL(window.location.href);
+    if (url.searchParams.has('quality')) {
+        url.searchParams.set('quality', quality);
+        history.replaceState(null, '', url);
+    }
+    if (platform === 'twitch') renderPlayer();
 });
 const settings = document.getElementById('settings');
 document.getElementById('open-settings').addEventListener('click', () => settings.showModal());

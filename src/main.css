@@ -70,3 +70,7 @@ dialog .field-hint { margin: 8px 0 22px; font-size: .78rem; }
     .channel-info { order: 2; flex-basis: 100%; }
     .channel-form { order: 3; }
 }
+/* The chat providers render a white page inside a cross-origin frame. */
+.chat { filter: invert(1) hue-rotate(180deg); background: #ebebe9; }
+.auto-status { margin: 0; padding: 8px 20px; background: #3b301b; color: #f6dfaa; font-size: .8rem; }
+.auto-status[hidden] { display: none; }
