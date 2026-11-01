@@ -1,77 +1,40 @@
-html, body{
-    background-color: black;
-    margin: 0px;
-    height: 100%;
-}
-
-
-#page-wrapper{
-    display: flex;
-    flex-flow: row;
-    height: 100%;
-}
-
-#channelSelector {
-    position: absolute;
-    right: 0;
-    display: inline-block;
-    border: none;
-    color: white;
-    padding: 19px 100px;
-    font-size: 1rem;
-    font-weight: bold;
-    background-color: #0e0e10;
-    border-bottom: 1px solid #18181b;
-    cursor: pointer;
-}
-
-#channelSelector:hover {
-    background-color: #18181b;
-}
-
-#channelSelector:active {
-    background-color: #242429;
-    border-bottom: 1px solid #242429;
-}
-
-.chat {
-    border-left: 1px solid #18181b;
-}
-
-#kick-icon{
-    position: absolute;
-    height: 10%;
-    opacity: 0;
-}
-#platformSwitch{
-    display: none;
-}
-
-#alertBox {
-    display: none;
-}
-
-@media only screen and (max-aspect-ratio: 1/1){
-    .player{
-        flex: 1 1 auto;
-    }
-
-    .chat{
-        flex: 6 1 auto;
-    }
-    #page-wrapper {
-        flex-flow: column;
-    }
-    #channelSelector{
-        left: 0%;
-    }
-}
-@media only screen and (min-aspect-ratio: 1/1){
-    .player{
-        flex: 50 1 auto;
-    }
-
-    .chat{
-        flex: 1 1 auto;
-    }
+:root { color-scheme: dark; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #09090b; color: #f5f5f6; }
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body { min-height: 100dvh; }
+button, input { font: inherit; }
+button, input { border-radius: 6px; }
+button:focus-visible, input:focus-visible { outline: 2px solid #bca5ff; outline-offset: 2px; }
+#page-wrapper { display: flex; flex-direction: column; height: 100dvh; min-height: 400px; }
+.toolbar { min-height: 68px; display: flex; align-items: center; gap: 28px; padding: 12px 20px; background: #141416; border-bottom: 1px solid #29292e; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; white-space: nowrap; letter-spacing: -.02em; }
+.brand-mark { width: 11px; height: 11px; border-radius: 50%; background: #a98aff; }
+.channel-info { display: flex; align-items: center; gap: 9px; min-width: 0; font-size: .875rem; }
+.channel-label, .chat-subtitle { color: #a6a6af; }
+#current-channel { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.platform { color: #d8cbff; background: #302641; border-radius: 4px; padding: 4px 7px; font-size: .7rem; font-weight: 700; }
+.channel-form { display: flex; gap: 8px; margin-left: auto; }
+.channel-form input { width: 170px; min-width: 0; border: 1px solid #44444d; background: #202024; color: #fff; padding: 9px 11px; }
+.channel-form input::placeholder { color: #aaaab4; }
+.channel-form button { border: 1px solid #a98aff; background: #a98aff; color: #181024; font-weight: 700; padding: 9px 14px; cursor: pointer; white-space: nowrap; }
+.channel-form button:hover { background: #c2adff; border-color: #c2adff; }
+.channel-form button:active { background: #9674ef; }
+.viewing-area { display: flex; flex: 1; min-height: 0; }
+.player-area { flex: 1; min-width: 0; min-height: 0; background: #000; }
+.player, .chat { display: block; width: 100%; height: 100%; border: 0; }
+.chat-area { display: flex; flex-direction: column; width: 340px; min-width: 260px; background: #141416; border-left: 1px solid #29292e; }
+.chat-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 16px; border-bottom: 1px solid #29292e; font-size: .875rem; font-weight: 700; }
+.chat-subtitle { font-size: .75rem; font-weight: 400; }
+.chat { flex: 1; min-height: 0; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+::selection { background: #7253bc; color: #fff; }
+@media (max-width: 720px) {
+    #page-wrapper { height: auto; min-height: 100dvh; }
+    .toolbar { flex-wrap: wrap; gap: 12px; padding: 14px 16px; }
+    .brand { margin-right: auto; }
+    .channel-form { flex-basis: 100%; min-width: 0; margin-left: 0; }
+    .channel-form input { flex: 1; width: 0; }
+    .viewing-area { flex-direction: column; }
+    .player-area { flex: none; width: 100%; aspect-ratio: 16 / 9; }
+    .chat-area { width: 100%; min-width: 0; height: max(360px, 48dvh); border-left: 0; border-top: 1px solid #29292e; }
 }

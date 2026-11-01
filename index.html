@@ -3,26 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0e0e10">
     <link rel="stylesheet" href="src/main.css">
-    <link rel="shortcut icon" href="src/images/favicon.svg" type="image/x-icon">
+    <link rel="icon" href="src/images/favicon.svg" type="image/svg+xml">
     <title>Stream Player</title>
 </head>
 <body>
     <div id="page-wrapper">
-        <button id="channelSelector" onclick="channelSelector()">Change Channel</button>
-        <button id="platformSwitch" current="twitch"></button>
-        
-        <iframe id="twitch-player" class="player" src="" frameborder="0" scrolling="no"></iframe>
-        <iframe id="twitch-chat" class="chat" src="" frameborder="0"></iframe>
-
-        <div id="alertBox"></div>
-
+        <header class="toolbar">
+            <div class="brand"><span class="brand-mark" aria-hidden="true"></span><span>Stream Player</span></div>
+            <div class="channel-info"><span class="channel-label">Watching</span><strong id="current-channel">xqc</strong><span id="current-platform" class="platform">Twitch</span></div>
+            <form id="channel-form" class="channel-form">
+                <label class="visually-hidden" for="channel-input">Channel name</label>
+                <input id="channel-input" name="channel" type="text" placeholder="Channel name" autocomplete="off" spellcheck="false" maxlength="25" required>
+                <button type="submit">Change channel</button>
+            </form>
+        </header>
+        <main class="viewing-area">
+            <section class="player-area" aria-label="Stream player">
+                <iframe id="twitch-player" class="player" title="Stream player" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            </section>
+            <aside class="chat-area" aria-label="Stream chat">
+                <div class="chat-heading"><span>Chat</span><span class="chat-subtitle">Live conversation</span></div>
+                <iframe id="twitch-chat" class="chat" title="Stream chat"></iframe>
+            </aside>
+        </main>
+        <p id="status" class="visually-hidden" role="status" aria-live="polite"></p>
     </div>
-    <script src="https://raw.githubusercontent.com/richtr/NoSleep.js/master/dist/NoSleep.min.js"></script>
-    <script>
-        var noSleep = new NoSleep();
-        noSleep.enable();
-    </script>
     <script src="src/main.js"></script>
 </body>
 </html>
