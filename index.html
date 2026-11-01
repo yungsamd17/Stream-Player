@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0e0e10">
+    <meta name="theme-color" content="#101014">
     <link rel="stylesheet" href="src/main.css">
     <link rel="icon" href="src/images/favicon.svg" type="image/svg+xml">
     <title>Stream Player</title>
@@ -11,25 +11,40 @@
 <body>
     <div id="page-wrapper">
         <header class="toolbar">
-            <div class="brand"><span class="brand-mark" aria-hidden="true"></span><span>Stream Player</span></div>
-            <div class="channel-info"><span class="channel-label">Watching</span><strong id="current-channel">xqc</strong><span id="current-platform" class="platform">Twitch</span></div>
+            <a class="brand" href="./" aria-label="Stream Player home"><img src="src/images/favicon.svg" alt="" width="36" height="36"><span>Stream Player</span></a>
+            <div class="channel-info"><span class="channel-label">Watching on</span><span id="current-platform" class="platform" data-platform="twitch">Twitch</span></div>
             <form id="channel-form" class="channel-form">
                 <label class="visually-hidden" for="channel-input">Channel name</label>
                 <input id="channel-input" name="channel" type="text" placeholder="Channel name" autocomplete="off" spellcheck="false" maxlength="25" required>
-                <button type="submit">Change channel</button>
+                <button class="primary" type="submit">Change channel</button>
             </form>
+            <button id="open-settings" class="icon-button settings-button" type="button" aria-label="Open settings" title="Settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1-1.9 3.3-.2-.1a1.6 1.6 0 0 0-2.3 1l-.1.2h-3.8l-.1-.2a1.6 1.6 0 0 0-2.3-1l-.2.1L7 16.9l.1-.1a1.6 1.6 0 0 0-.8-2.5H6v-3.8h.3a1.6 1.6 0 0 0 .8-2.5L7 7.9l1.9-3.3.2.1a1.6 1.6 0 0 0 2.3-1l.1-.2h3.8l.1.2a1.6 1.6 0 0 0 2.3 1l.2-.1 1.9 3.3-.1.1a1.6 1.6 0 0 0 .8 2.5h.3v3.8h-.3a1.6 1.6 0 0 0-1.1.7Z" transform="translate(-1.5 -1.5)"/></svg></button>
         </header>
         <main class="viewing-area">
-            <section class="player-area" aria-label="Stream player">
-                <iframe id="twitch-player" class="player" title="Stream player" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-            </section>
-            <aside class="chat-area" aria-label="Stream chat">
-                <div class="chat-heading"><span>Chat</span><span class="chat-subtitle">Live conversation</span></div>
-                <iframe id="twitch-chat" class="chat" title="Stream chat"></iframe>
+            <section class="player-area" aria-label="Stream player"><iframe id="twitch-player" class="player" title="Stream player" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></section>
+            <aside id="chat-panel" class="chat-area" aria-label="Stream chat">
+                <div class="chat-heading"><span>Chat</span><div class="chat-actions"><button id="chat-toggle" class="icon-button" type="button" aria-controls="twitch-chat" aria-expanded="true" aria-label="Hide chat" title="Hide chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><button id="reload-chat" class="icon-button" type="button" aria-label="Reload chat" title="Reload chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5"/><path d="M19 12a7 7 0 1 0-1.6 4.5"/></svg></button></div></div>
+                <iframe id="twitch-chat" class="chat" title="Stream chat" allowtransparency="true"></iframe>
             </aside>
         </main>
         <p id="status" class="visually-hidden" role="status" aria-live="polite"></p>
     </div>
+    <dialog id="settings" aria-labelledby="settings-title">
+        <div class="dialog-heading"><div><h2 id="settings-title">Settings</h2><p>Choose how you watch.</p></div><button id="close-settings" class="icon-button" type="button" aria-label="Close settings" title="Close settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+        <div class="settings-field"><label for="platform-mode">Platform</label><select id="platform-mode"><option value="auto">Auto switch</option><option value="twitch">Twitch</option><option value="kick">Kick</option></select><p>Auto switches to Kick when the channel is live there.</p></div>
+        <div class="settings-field"><label for="quality">Twitch quality</label><select id="quality"><option value="chunked">Best available</option><option value="1080p60">1080p60</option><option value="720p60">720p60</option><option value="480p30">480p</option><option value="160p30">160p</option></select><p>Applies to the Twitch player.</p></div>
+    </dialog>
+    <dialog id="welcome" aria-labelledby="welcome-title" aria-describedby="welcome-description">
+        <form id="welcome-form">
+            <img src="src/images/favicon.svg" alt="" width="48" height="48">
+            <h1 id="welcome-title">Welcome to Stream Player</h1>
+            <p id="welcome-description">Your stream and chat, together in one place. Choose a channel to get started.</p>
+            <label for="welcome-channel">Channel name</label>
+            <input id="welcome-channel" type="text" value="xqc" autocomplete="off" spellcheck="false" maxlength="25" required>
+            <p class="field-hint">Use the same channel name for Twitch and Kick.</p>
+            <button class="primary welcome-submit" type="submit">Start watching</button>
+        </form>
+    </dialog>
     <script src="src/main.js"></script>
 </body>
 </html>

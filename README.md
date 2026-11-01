@@ -5,13 +5,12 @@ Webpage with embedded Twitch & Kick player and chat
 
 ## Features
 
-- Channel change button top left.
-- Automatically switch stream if Kick stream either goes live or offline. (checks the same username that is entered in the prompt.)
-- 3rd party chat supports 7TV,BTTV,FFZ emotes.
-- Remember selected channel on page load.
-- Enter /?channel={channel}&quality={720p60} to change channel and quality. Not both of the prompts are required. Quality change only works with the Twitch player Kick didn't implement this feature yet in their player.
-- Early Portrait mode for mobile devices (CSS help welcome). 
-- Load [xQc](https://twitch.tv/xqc) stream if no stream is selected.
+- Choose a channel on your first visit and change it from the toolbar. The last channel is remembered.
+- Automatically switch to Kick when the same channel is live there, or choose Twitch or Kick manually. Auto switching depends on Kick's API being available to the browser.
+- Choose Twitch playback quality, hide or show chat, and reload chat independently.
+- Chat overlays support third-party emotes and use a dark background.
+- Use `?channel=channelname&quality=720p60` to set a channel and Twitch quality in the URL. Use `quality=best` for the best available Twitch quality.
+- The player and chat adapt to desktop and mobile screens.
 
 
 ## Why
